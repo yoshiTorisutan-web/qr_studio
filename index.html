@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Studio — Créateur de QR codes</title>
+
+  <!-- QRCode library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <!-- ── Styles ── -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/result.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- ═════ HEADER ═════ -->
+  <header>
+    <h1>QR Studio</h1>
+    <p>Créez, personnalisez et téléchargez des QR codes</p>
+  </header>
+
+  <!-- ═════ TABS ═════ -->
+  <div class="tabs">
+    <button class="tab active" data-tab="url">🔗 URL</button>
+    <button class="tab" data-tab="text">📝 Texte</button>
+    <button class="tab" data-tab="wifi">📶 Wi-Fi</button>
+    <button class="tab" data-tab="vcard">👤 Contact</button>
+    <button class="tab" data-tab="history">🕐 Historique</button>
+  </div>
+
+  <!-- ═════ PANEL — URL ═════ -->
+  <div id="tab-url" class="card">
+    <div class="field-group">
+      <label class="field">Adresse URL</label>
+      <input id="in-url" type="url" placeholder="https://exemple.com" />
+    </div>
+  </div>
+
+  <!-- ═════ PANEL — Texte ═════ -->
+  <div id="tab-text" class="card" style="display:none;">
+    <div class="field-group">
+      <label class="field">Texte libre</label>
+      <textarea id="in-text" placeholder="N'importe quel contenu : message, adresse, numéro…"></textarea>
+    </div>
+  </div>
+
+  <!-- ═════ PANEL — Wi-Fi ═════ -->
+  <div id="tab-wifi" class="card" style="display:none;">
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="field-group">
+        <label class="field">Nom du réseau (SSID)</label>
+        <input id="in-ssid" type="text" placeholder="MonWiFi" />
+      </div>
+      <div class="field-group">
+        <label class="field">Mot de passe</label>
+        <input id="in-wpass" type="password" placeholder="••••••••" />
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field">Chiffrement</label>
+      <select id="in-wenc">
+        <option value="WPA">WPA / WPA2</option>
+        <option value="WEP">WEP</option>
+        <option value="nopass">Aucun</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ═════ PANEL — vCard / Contact ═════ -->
+  <div id="tab-vcard" class="card" style="display:none;">
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="field-group">
+        <label class="field">Prénom</label>
+        <input id="in-vfn" type="text" placeholder="Jean" />
+      </div>
+      <div class="field-group">
+        <label class="field">Nom</label>
+        <input id="in-vln" type="text" placeholder="Dupont" />
+      </div>
+      <div class="field-group">
+        <label class="field">Téléphone</label>
+        <input id="in-vtel" type="tel" placeholder="+33 6 00 00 00 00" />
+      </div>
+      <div class="field-group">
+        <label class="field">Email</label>
+        <input id="in-vemail" type="email" placeholder="jean@exemple.com" />
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field">Organisation</label>
+      <input id="in-vorg" type="text" placeholder="Ma Société" />
+    </div>
+    <div class="field-group">
+      <label class="field">Site web</label>
+      <input id="in-vweb" type="url" placeholder="https://exemple.com" />
+    </div>
+  </div>
+
+  <!-- ═════ PANEL — Historique ═════ -->
+  <div id="tab-history" style="display:none;">
+    <div id="history-list"></div>
+  </div>
+
+  <!-- ═════ OPTIONS ═════ -->
+  <div id="options-panel" class="card">
+    <p class="section-title">Apparence</p>
+
+    <div class="grid-2" style="margin-bottom:14px;">
+      <div class="field-group">
+        <label class="field">Taille — <span id="size-out">220</span>px</label>
+        <div class="range-wrap">
+          <input type="range" id="qr-size" min="128" max="400" step="8" value="220" />
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field">Correction d'erreur</label>
+        <select id="qr-ec">
+          <option value="L">L — Faible</option>
+          <option value="M" selected>M — Moyen</option>
+          <option value="Q">Q — Élevé</option>
+          <option value="H">H — Max (logo)</option>
+        </select>
+      </div>
+    </div>
+
+    <hr class="divider" />
+    <p class="section-title" style="margin-bottom:8px;">Couleurs</p>
+
+    <div class="presets">
+      <div class="preset selected" style="background:#1a1917;" data-fg="#1a1917" data-bg="#ffffff" title="Classique"></div>
+      <div class="preset" style="background:#185FA5;" data-fg="#185FA5" data-bg="#E6F1FB" title="Bleu"></div>
+      <div class="preset" style="background:#0F6E56;" data-fg="#0F6E56" data-bg="#E1F5EE" title="Vert"></div>
+      <div class="preset" style="background:#993C1D;" data-fg="#993C1D" data-bg="#FAECE7" title="Corail"></div>
+      <div class="preset" style="background:#534AB7;" data-fg="#534AB7" data-bg="#EEEDFE" title="Violet"></div>
+      <div class="preset" style="background:#854F0B;" data-fg="#854F0B" data-bg="#FAEEDA" title="Ambre"></div>
+      <div class="preset" style="background:#993556;" data-fg="#993556" data-bg="#FBEAF0" title="Rose"></div>
+      <div class="preset" style="background:#ffffff; border: 2px solid #ddd;" data-fg="#ffffff" data-bg="#1a1917" title="Inversé"></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="field-group">
+        <label class="field">Couleur QR</label>
+        <input type="color" id="qr-fg" value="#1a1917" />
+      </div>
+      <div class="field-group">
+        <label class="field">Fond</label>
+        <input type="color" id="qr-bg" value="#ffffff" />
+      </div>
+    </div>
+
+    <hr class="divider" />
+    <p class="section-title">Logo central (optionnel)</p>
+    <div class="field-group">
+      <input type="file" id="logo-input" accept="image/*" />
+      <p style="font-size:11px; color:var(--text-hint); margin-top:5px;">
+        Recommandé : PNG avec fond transparent. La correction passe en H automatiquement.
+      </p>
+    </div>
+  </div>
+
+  <!-- ═════ GENERATE BUTTON ═════ -->
+  <button class="btn btn-primary" id="gen-btn">Générer le QR code</button>
+
+  <!-- ═════ RESULT ═════ -->
+  <div id="qr-result">
+    <div id="qr-frame"></div>
+    <p id="qr-preview-text"></p>
+    <div class="dl-row">
+      <button class="btn btn-sm" id="dl-png">⬇ PNG</button>
+      <button class="btn btn-sm" id="dl-jpg">⬇ JPG</button>
+      <button class="btn btn-sm" id="dl-svg">⬇ SVG</button>
+      <button class="copy-btn" id="copy-content">Copier le contenu</button>
+    </div>
+  </div>
+
+</div><!-- /.app -->
+
+<!-- ── Scripts (ordre de chargement important) ── -->
+<script src="js/state.js"></script>
+<script src="js/content.js"></script>
+<script src="js/generator.js"></script>
+<script src="js/options.js"></script>
+<script src="js/downloads.js"></script>
+<script src="js/history.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

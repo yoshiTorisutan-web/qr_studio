@@ -1,0 +1,155 @@
+/* ═══════════════════════════════════════════════════
+   QR Studio — Form Components
+   Inputs · Selects · Range · Color · File · Buttons
+   ═══════════════════════════════════════════════════ */
+
+/* ═══ LABELS & FIELD GROUPS ═══ */
+label.field {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.field-group {
+  margin-bottom: 12px;
+}
+.field-group:last-child {
+  margin-bottom: 0;
+}
+
+/* ═══ TEXT INPUTS ═══ */
+input[type=text],
+input[type=url],
+input[type=email],
+input[type=tel],
+input[type=password],
+textarea,
+select {
+  width: 100%;
+  padding: 9px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+  appearance: none;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--accent);
+}
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* ═══ RANGE SLIDER ═══ */
+.range-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.range-wrap input[type=range] {
+  flex: 1;
+  padding: 0;
+  background: none;
+  border: none;
+  accent-color: var(--accent);
+}
+.range-wrap span {
+  font-size: 13px;
+  color: var(--text-muted);
+  min-width: 44px;
+  text-align: right;
+}
+
+/* ═══ COLOR PRESETS ═══ */
+.presets {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.preset {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.15s, transform 0.1s;
+  flex-shrink: 0;
+}
+.preset:hover {
+  transform: scale(1.1);
+}
+.preset.selected {
+  border-color: var(--accent);
+}
+
+/* ═══ COLOR PICKER ═══ */
+input[type=color] {
+  width: 100%;
+  height: 38px;
+  padding: 3px 5px;
+  cursor: pointer;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+/* ═══ FILE INPUT ═══ */
+input[type=file] {
+  font-size: 13px;
+  padding: 8px 10px;
+  width: 100%;
+  background: var(--bg);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  color: var(--text-muted);
+}
+input[type=file]:hover {
+  border-color: var(--border-hover);
+}
+
+/* ═══ BUTTONS ═══ */
+.btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn:hover {
+  background: var(--bg);
+  border-color: var(--border-hover);
+}
+.btn:active {
+  transform: scale(0.98);
+}
+.btn-primary {
+  width: 100%;
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  font-size: 15px;
+}
+.btn-primary:hover {
+  opacity: 0.88;
+  background: var(--accent);
+}
+.btn-sm {
+  padding: 7px 14px;
+  font-size: 13px;
+}
